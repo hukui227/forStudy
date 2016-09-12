@@ -1,0 +1,55 @@
+这个工程是模拟struts工作原理
+
+整个应用层的关系，1，tomcat；2，web容器；3，web应用
+
+web容器读取web应用的web.xml配置文件
+
+Servlet：
+	将请求和处理的映射关系都配置在web.xml中，处理类则要做，业务逻辑，持久化，跳转控制等功能。
+	
+Struts1：
+	在web.xml中配置一个Filter
+	Filter中做跳转控制逻辑处理：
+		1，init方法，读取配置文件，将映射关系转成ModeAndView对象。
+		2，doFilter方法，主逻辑处理：
+			2.1 对不同的类型请求，做不同处理控制
+			2.2 对与不处理的请求交由系统，调用chain.doFilter(req,res);
+			2.3 对于跳转jsp使用forward方式。
+				forward：req.getRequestDispatcher().forward(req,res);
+				redirect:res.sendRedirect(url);
+				
+Struts2:
+					
+
+					
+
+jdbc:
+
+
+Hibernate:
+
+Spring:
+
+
+-------------主要问题-----------
+1，如何跳转到WEB-INF下的jsp文件？
+	使用servlet中的forward方法
+	
+2，frame和frameSet的使用？
+	一个frame中的跳转在另一个frame中展现，使用a标签的target属性。
+	target默认值:_self自身的页面跳转，这里填写另一个frame的name值，即可在该frame中展示跳转页面
+	
+3，forward和redirect的区别？
+
+4, 关于方法重用和重构。
+	案例1： 我有一个文件读取方法，做一个公用的读取方法，里面会有部分逻辑是要定制化的。如果是txt的按照txt的格式放入list中，如果是excel的按照excel格式读取放入list
+	
+	思路：   最开始想到的是静态方法的方式，发现行不通。借鉴simpleDateFormat，使用final方法。
+	解决1： 父类是抽象类，写一个入口方法是final的，这个类实现共通部分的类容，中间定制化的方法，写一个空方法，供子类实现。
+	结果1： 见TxtFileUtil.readFile(String fileUrl,boolean isPutList,List<String> list)的调用实现过程。
+	
+5，jsp页面嵌入java代码。
+	引入包等，见doubleColorBall/list.jsp
+	
+	
+						
