@@ -45,7 +45,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    %>
    </table>
    <table width="80%">
-   		<tr><td align="right"><button>添加</button></td></tr>
+   		<tr><td align="right"><button onclick="toAdd()">添加</button></td></tr>
    </table>
   </body>
+  <script type="text/javascript">
+  	function toAdd(){
+  		var url = "<%=basePath%>";
+  		url = url + "doubleColorBall/toForward_add.action";
+  		
+  		window.location.href = url;
+  	}
+  </script>
 </html>

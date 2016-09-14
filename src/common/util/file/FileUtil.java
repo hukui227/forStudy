@@ -1,13 +1,15 @@
 package common.util.file;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Collection;
-import java.util.List;
 
 public abstract class FileUtil {
 	
@@ -44,10 +46,28 @@ public abstract class FileUtil {
 		return laststr;
 	}
 	
-	public String writeFile(String fileUrl){
-		
-		return "";
+	public final void writeFile(String fileUrl,Object content){
+		String result = castToContent(content);
+		if(result!=null&&result.length()>0){
+			BufferedWriter writer = null;
+			
+			try{
+				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileUrl, true)));
+				writer.write(result+"\r\n");
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				try{
+					if(writer!=null)
+						writer.close();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public abstract void putList(String temStr,Collection list);
+	
+	public abstract String castToContent(Object content);
 }

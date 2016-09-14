@@ -106,9 +106,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	String defaultUrl = (String)session.getAttribute("defaultUrl");
   %>
   <frameset rows="59,*" frameborder="no" border="0" framespacing="0">
-  	<frame src="common/toForward_top.action" noresize="noresize" frameborder="0" name="topFrame" marginwidth="0" marginheight="0" scrolling="no">
+  	<frame src="sys/toForward_top.action" noresize="noresize" frameborder="0" name="topFrame" marginwidth="0" marginheight="0" scrolling="no">
   	<frameset  rows="*" cols="195,*" id="frame">
-  	<frame src="common/toForward_left.action" noresize="noresize" frameborder="1" name="topFrame" marginwidth="0" marginheight="0" scrolling="no">
+  	<frame src="sys/toForward_left.action" noresize="noresize" frameborder="1" name="topFrame" marginwidth="0" marginheight="0" scrolling="no">
   	<frame src="<%=defaultUrl %>" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="yes">
   	</frameset>
   <noframes>

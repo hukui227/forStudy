@@ -1,6 +1,8 @@
 package bean.common;
 
-public class DoubleColorBall {
+import java.io.Serializable;
+
+public class DoubleColorBall implements Serializable{
 
 	private String issue;
 	

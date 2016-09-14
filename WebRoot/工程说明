@@ -52,4 +52,36 @@ Spring:
 	引入包等，见doubleColorBall/list.jsp
 	
 	
-						
+6, 如和写一个通用方法，将请求参数和实体对象进行关联赋值。
+	要用大request.getParameterMap()
+	baseServlet中paramToEntity()实现了该逻辑
+
+7，request.getParameterMap()方法返回的一个锁定的Map对象，不能进行正常的get和set操作，get拿到也是一个引用地址，而非实际值。需要转换成可操作的Map
+public static Map getParameterMap(HttpServletRequest request) {
+    // 参数Map
+    Map properties = request.getParameterMap();
+    // 返回值Map
+    Map returnMap = new HashMap();
+    Iterator entries = properties.entrySet().iterator();
+    Map.Entry entry;
+    String name = "";
+    String value = "";
+    while (entries.hasNext()) {
+        entry = (Map.Entry) entries.next();
+        name = (String) entry.getKey();
+        Object valueObj = entry.getValue();
+        if(null == valueObj){
+            value = "";
+        }else if(valueObj instanceof String[]){
+            String[] values = (String[])valueObj;
+            for(int i=0;i<values.length;i++){
+                value = values[i] + ",";
+            }
+            value = value.substring(0, value.length()-1);
+        }else{
+            value = valueObj.toString();
+        }
+        returnMap.put(name, value);
+    }
+    return returnMap;
+}						

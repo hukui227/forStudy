@@ -91,9 +91,18 @@ public class DispatcherServlet implements Filter{
 			HashMap<String,String> resultMap = mv.getResultMap();
 			if(servletName!=null){
 				String result = doProcess(req,res,servletName,methodName,actionName);
-				String urlRes = resultMap.get(result);
+				String urlRes = "";
+				if(actionName.contains("toForward_")){
+					urlRes = packageCode+"/"+result+".jsp";
+				}else{
+					urlRes = resultMap.get(result);
+				}
 				req.getSession().setAttribute("appPath", req.getContextPath());
-				req.getRequestDispatcher("/WEB-INF/jsp/"+urlRes).forward(req, res);
+				if(urlRes.contains(".do")||urlRes.contains(".action")){
+					res.sendRedirect(urlRes);
+				}else{
+					req.getRequestDispatcher("/WEB-INF/jsp/"+urlRes).forward(req, res);
+				}
 			}
 		}
 	}
@@ -127,9 +136,11 @@ public class DispatcherServlet implements Filter{
 		mv.setServletName("DoubleColorBallServlet");
 		HashMap<String,String> actionAndMethod = new HashMap<String,String>();
 		actionAndMethod.put("queryHistory", "queryHistory");
+		actionAndMethod.put("add", "add");
 		mv.setMethodName(actionAndMethod);
 		HashMap<String,String> resultMap = new HashMap<String,String>();
 		resultMap.put("success", "doubleColorBall/list.jsp");
+		resultMap.put("toList", "queryHistory.do");
 		mv.setResultMap(resultMap);
 		mapping.put("doubleColorBall", mv);
 		
@@ -141,10 +152,8 @@ public class DispatcherServlet implements Filter{
 		resultMap = new HashMap<String,String>();
 		resultMap.put("success", "sys/login_success.jsp");
 		resultMap.put("faile", "sys/login_failure.jsp");
-		resultMap.put("top", "sys/top.jsp");
-		resultMap.put("left", "sys/left.jsp");
 		mv.setResultMap(resultMap);
-		mapping.put("common", mv);
+		mapping.put("sys", mv);
 		
 		//初始化配置文件配置信息
 		ServletContext servletContext = filterConfig.getServletContext();
